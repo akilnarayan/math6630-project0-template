@@ -5,7 +5,10 @@
 #
 # on x \in [-1,1] with periodic boundary conditions.
 
+export_pdf = False
+
 import numpy as np
+from matplotlib import rcParams
 from matplotlib import pyplot as plt
 from utils import lserk, lserk_step
 
@@ -50,6 +53,20 @@ for (i,dt) in enumerate(dts):
     x0 = lserk_step(0, xT, f, dts[i], Ns[i], lserk)
     errors[i] = np.max(np.abs(ufine - u0(x0)))
 
+rcParams['font.family'] = 'serif'
+rcParams['font.weight'] = 'semibold'
+
 plt.loglog(dts, errors, 'r.-')
-plt.xlabel('Timestep $h$')
-plt.ylabel('$|| u(x,T) - u_h(x,T) ||_{L^\infty([-1,1])}$')
+# Add a line with slope 4 
+xs = np.array([np.min(dts)*4, np.min(dts)*8])
+ys = xs**4
+ys *= 1e-9/ys[0]
+plt.loglog(xs, ys, 'k--')
+plt.xlabel(r'Timestep $h$')
+plt.title(r'$\Vert u(x,T) - u_h(x,T)\Vert_{L^\infty([-1,1])}$')
+plt.gca().annotate(r'Slope$=4$', xy=(np.min(dts)*6, 10*np.min(ys)), horizontalalignment='right')
+
+if export_pdf:
+    plt.savefig(fname="../convergence-plot.pdf", format='pdf')
+
+plt.show()

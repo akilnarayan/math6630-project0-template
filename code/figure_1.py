@@ -5,7 +5,10 @@
 #
 # on x \in [-1,1] with periodic boundary conditions.
 
+export_pdf = False
+
 import numpy as np
+from matplotlib import rcParams
 from matplotlib import pyplot as plt
 from utils import lserk, lserk_step
 
@@ -39,6 +42,8 @@ xT = lserk_step(0, x0, f, dt, N, lserk)
 f = lambda tt, yy: -a(yy)
 y0 = lserk_step(0, yT, f, dt, N, lserk)
 
+rcParams['font.family'] = 'serif'
+rcParams['font.weight'] = 'semibold'
 plt.figure(figsize=(10, 5))
 
 plt.subplot(2, 3, 1)
@@ -71,6 +76,7 @@ plt.xlim(axinset)
 plt.xlabel('$x$')
 plt.ylabel('$u(x,t)$')
 plt.title('Only $X_j$ particles')
+plt.xticks([-1e-3, 0, 1e-3])
 
 plt.subplot(2, 3, 5)
 plt.plot(yT, u0(y0), 'r.-')
@@ -78,6 +84,7 @@ plt.xlim(axinset)
 plt.xlabel('$x$')
 plt.ylabel('$u(x,t)$')
 plt.title('Only $Y_j$ particles')
+plt.xticks([-1e-3, 0, 1e-3])
 
 plt.subplot(2, 3, 6)
 ordering = np.argsort(np.hstack([xT, yT]))
@@ -86,6 +93,11 @@ plt.xlim(axinset)
 plt.xlabel('$x$')
 plt.ylabel('$u(x,t)$')
 plt.title('Both $X_j$ and $Y_j$ particles')
+plt.xticks([-1e-3, 0, 1e-3])
 
-plt.savefig(fname="./temp.pdf", format='pdf')
+plt.subplots_adjust(wspace = 0.4, hspace=0.5)
+
+if export_pdf:
+    plt.savefig(fname="../particle-plot.pdf", format='pdf')
+
 plt.show()

@@ -9,6 +9,20 @@
 
 \usepackage{mathdefs}
 
+%% Patch for amsart date
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\@maketitle}
+  {\ifx\@empty\@dedicatory}
+  {\ifx\@empty\@date \else {\vskip3ex \centering\footnotesize\@date\par\vskip1ex}\fi
+   \ifx\@empty\@dedicatory}
+  {}{}
+\patchcmd{\@adminfootnotes}
+  {\ifx\@empty\@date\else \@footnotetext{\@setdate}\fi}
+  {}{}{}
+\makeatother
+%%
+
 \title{Project -1: Characteristics}
 \author{Akil Narayan}
 \date{\today}
@@ -64,8 +78,8 @@ Thus, given $x_0 \in [-1,1)$, we can solve \eqref{eq:char-ode} forward in time w
   Results from this experiments are shown in Figure \ref{fig:f1}. The trajectories shown with both the particles $X_j$ and $Y_j$ are able to fully capture the solution variation, whereas individually the $X_j$ and $Y_j$ miss essential features of the solution profile. 
 
 \begin{figure}
-  %\includegraphics[width=\textwidth]{figure-1.pdf}
-  \caption{Demonstration that neither the particles $X_j(t)$ defined in \eqref{eq:Xj} nor the particles $Y_j(t)$ defined in \eqref{eq:Yj} are alone enough to fully describe the solution. Left figures: Solution plots obtained by only the $X_j$ particles. Center figures: Solution plots obtained by only the $Y_j$ particles. Right figures: Solution plots obtained by plotting both the $X_j$ and $Y_j$ particles. (I.e., formed, by unioning the sets of particles.) Top plots: solutions obtained from pointwise values of $X_j$ and/or $Y_j$. Bottom plots: Inset with the solution viewed on the zommed interval $[-10^{-3}, 10^{-3}]$. All experiments run to time $T = 1$ using the wavespeed and initial data in \eqref{eq:au0-1}, with $N = 100$ particles generated from an equidistant grid.}\label{fig:f1}
+  \includegraphics[width=\textwidth]{particle-plot.pdf}
+  \caption{Demonstration that neither the particles $X_j(t)$ defined in \eqref{eq:Xj} nor the particles $Y_j(t)$ defined in \eqref{eq:Yj} are alone enough to fully describe the solution. Left figures: Solution plots obtained by only the $X_j$ particles. Center figures: Solution plots obtained by only the $Y_j$ particles. Right figures: Solution plots obtained by plotting both the $X_j$ and $Y_j$ particles. (I.e., formed by unioning the sets of particles.) Top plots: solutions obtained from pointwise values of $X_j$ and/or $Y_j$. Bottom plots: Inset with the solution viewed on the zoomed interval $[-10^{-3}, 10^{-3}]$. All experiments run to time $T = 1$ using the wavespeed and initial data in \eqref{eq:au0-1}, with $N = 100$ particles generated from an equidistant grid.}\label{fig:f1}
 \end{figure}
 
   \section{Convergence}
@@ -94,7 +108,7 @@ Thus, given $x_0 \in [-1,1)$, we can solve \eqref{eq:char-ode} forward in time w
     where $\widetilde{C} = \widetilde{C}(a, T, u_0)$.
   \end{proposition}
   \begin{proof}
-    Recall that we have assumed that $u_0$ is smooth, and hence it has a Lipshitz constant that is bounded by the $L^\infty$ norm of the derivative:
+    Recall that we have assumed that $u_0$ is smooth, and hence it has a Lipschitz constant that is bounded by the $L^\infty$ norm of the derivative:
     \begin{align*}
       \left| u_0(x) - u_0(y) \right| &\leq U |x - y|, & U &= \sup_{x \in [-1,1)} |u_0'(x)|.
     \end{align*}
@@ -114,8 +128,10 @@ Thus, given $x_0 \in [-1,1)$, we can solve \eqref{eq:char-ode} forward in time w
   \end{align*}
   where $\{x_j\}_{j=1}^{10^3}$ is an equispaced grid on $[-1,1)$. To compute the exact solution $u(x_j,T)$, we use a method of characteristics solver with a very refined timestep.  Figure \ref{fig:f2} confirms that we achieve fourth-order accuracy with respect to the time step $h$ used in the ODE solver. 
 \begin{figure}
-  %\includegraphics[width=\textwidth]{figure-1.pdf}
-  \caption{Demonstration that neither the particles $X_j(t)$ defined in \eqref{eq:Xj} nor the particles $Y_j(t)$ defined in \eqref{eq:Yj} are alone enough to fully describe the solution. Left figures: Solution plots obtained by only the $X_j$ particles. Center figures: Solution plots obtained by only the $Y_j$ particles. Right figures: Solution plots obtained by plotting both the $X_j$ and $Y_j$ particles. (I.e., formed, by unioning the sets of particles.) Top plots: solutions obtained from pointwise values of $X_j$ and/or $Y_j$. Bottom plots: Inset with the solution viewed on the zommed interval $[-10^{-3}, 10^{-3}]$. All experiments run to time $T = 1$ using the wavespeed and initial data in \eqref{eq:au0-1}, with $N = 100$ particles generated from an equidistant grid.}\label{fig:f2}
+  \begin{center}
+  \includegraphics[width=0.6\textwidth]{convergence-plot.pdf}
+  \end{center}
+  \caption{Demonstration that neither the particles $X_j(t)$ defined in \eqref{eq:Xj} nor the particles $Y_j(t)$ defined in \eqref{eq:Yj} are alone enough to fully describe the solution. Left figures: Solution plots obtained by only the $X_j$ particles. Center figures: Solution plots obtained by only the $Y_j$ particles. Right figures: Solution plots obtained by plotting both the $X_j$ and $Y_j$ particles. (I.e., formed, by unioning the sets of particles.) Top plots: solutions obtained from pointwise values of $X_j$ and/or $Y_j$. Bottom plots: Inset with the solution viewed on the zoomed interval $[-10^{-3}, 10^{-3}]$. All experiments run to time $T = 1$ using the wavespeed and initial data in \eqref{eq:au0-1}, with $N = 100$ particles generated from an equidistant grid.}\label{fig:f2}
 \end{figure}
 
 \bibliographystyle{siam}
