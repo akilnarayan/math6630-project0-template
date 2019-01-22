@@ -1,0 +1,6 @@
+Contains Python source code to reproduce figures in the report latex file. Running
+
+$ python figure_1.py
+$ python figure_2.py
+
+will reproduce these figures. Numpy and matplotlib are required.

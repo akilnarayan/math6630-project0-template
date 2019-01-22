@@ -1,0 +1,9 @@
+This repository contains my submission for Project -1 on computing solutions via the method of characteristics for the scalar wave equation.
+
+The root folder contains tex source for a report. The makefile will create the output report.pdf. E.g., running
+
+$ make
+
+on unix-based systems should work. If not, inspect the makefile to see how to compile with pdflatex.
+
+The subfolder "code" contains Python source that reproduces the figures in the report.
