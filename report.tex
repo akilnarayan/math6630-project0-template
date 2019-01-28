@@ -84,7 +84,7 @@ Thus, given $x_0 \in [-1,1)$, we can solve \eqref{eq:char-ode} forward in time w
 
   \section{Convergence}
   The method of characteristics paired with an ODE solver is a convergent numerical method under our assumptions. Let $T >0$ be given. Consider some fixed $x \in [-1,1)$. Define $X(T)$ as the solution to the ODE
-    \begin{align}\label{eq:X-ode}
+    \begin{align}\label{eq:X-ode2}
       X'(t) &= -a(X(t)), & X(0) = x.
     \end{align}
     This ODE is the time-reversed version of \eqref{eq:Yj}, so that 
@@ -100,9 +100,9 @@ Thus, given $x_0 \in [-1,1)$, we can solve \eqref{eq:char-ode} forward in time w
       \left| X(T) - X_h(T) \right| \leq C h^p,
     \end{align}
     where $C = C(a,T)$. Then the following result holds:
-  \begin{proposition}
+  \begin{proposition}\label{prop:convergence}
     With the above notation,
-    \begin{align}\label{eq:ode-accuracy}
+    \begin{align}\label{eq:pde-accuracy}
       \sup_{x \in [-1,1)} \left| u(x,T) - u_h(x,T) \right| \leq \widetilde{C} h^p,
     \end{align}
     where $\widetilde{C} = \widetilde{C}(a, T, u_0)$.
@@ -114,7 +114,7 @@ Thus, given $x_0 \in [-1,1)$, we can solve \eqref{eq:char-ode} forward in time w
     \end{align*}
     Then,
     \begin{align*}
-      \left| u(x,T) - u_h(x,T) \right| = \left| u_0(X(T)) - u_0(X_h(T)) \right| \leq U | X(T) - X_h(T)| \stackrel{\eqref{eq:ode-accuracy}}{\leq} C U |X(T) - X_h(T)|.
+      \left| u(x,T) - u_h(x,T) \right| = \left| u_0(X(T)) - u_0(X_h(T)) \right| \leq U | X(T) - X_h(T)| \stackrel{\eqref{eq:ode-accuracy}}{\leq} C U h^p.
     \end{align*}
     Letting $\widetilde{C} = C U$ and taking the supremum over $x$ completes the proof.
   \end{proof}
@@ -122,7 +122,7 @@ Thus, given $x_0 \in [-1,1)$, we can solve \eqref{eq:char-ode} forward in time w
   \begin{align*}
     a(x) &= -\sin(\pi x), & u_0(x) &= \sin(\pi x).
   \end{align*}
-  We use a multi-stage Runge-Kutta integrator to numerically solve \eqref{eq:X-ode}. In particular, we use a 5-stage low-storage integrator that is 4-th order accurate \cite{carpenter-kennedy-lserk}. Thus, we have the relation \eqref{eq:ode-accuracy} with $p = 4$. To verify that this accuracy is independent of $x$, we compute $L^\infty$ norms with respect to $x$ using the approximation,
+  We use a multi-stage Runge-Kutta integrator to numerically solve \eqref{eq:X-ode2}. In particular, we use a 5-stage low-storage integrator that is 4-th order accurate \cite{carpenter-kennedy-lserk}. Thus, we have the relation \eqref{eq:ode-accuracy} with $p = 4$. To verify that this accuracy is independent of $x$, we compute $L^\infty$ norms with respect to $x$ using the approximation,
   \begin{align*}
     \sup_{x \in [-1,1)} | u(x,T) - u_h(x,T) | \approx \max_{j=1, \ldots, 10^3} |u(x_j,T) - u_h(x_j,T)|,
   \end{align*}
@@ -131,7 +131,7 @@ Thus, given $x_0 \in [-1,1)$, we can solve \eqref{eq:char-ode} forward in time w
   \begin{center}
   \includegraphics[width=0.6\textwidth]{convergence-plot.pdf}
   \end{center}
-  \caption{Demonstration that neither the particles $X_j(t)$ defined in \eqref{eq:Xj} nor the particles $Y_j(t)$ defined in \eqref{eq:Yj} are alone enough to fully describe the solution. Left figures: Solution plots obtained by only the $X_j$ particles. Center figures: Solution plots obtained by only the $Y_j$ particles. Right figures: Solution plots obtained by plotting both the $X_j$ and $Y_j$ particles. (I.e., formed, by unioning the sets of particles.) Top plots: solutions obtained from pointwise values of $X_j$ and/or $Y_j$. Bottom plots: Inset with the solution viewed on the zoomed interval $[-10^{-3}, 10^{-3}]$. All experiments run to time $T = 1$ using the wavespeed and initial data in \eqref{eq:au0-1}, with $N = 100$ particles generated from an equidistant grid.}\label{fig:f2}
+  \caption{Demonstration of Proposition \ref{prop:convergence}: the method of characteristics converges to the solution of a PDE pointwise with the same order as the characteristics ODE solver. We show pointwise error in the solution (computed as a maximum over a dense grid) using the method of characteristics with an ODE solver timestep $h$. Our solver is a fourth-order Runge-Kutta integrator, hence we expect fourth-order convergence, as shown in this plot.}\label{fig:f2}
 \end{figure}
 
 \bibliographystyle{siam}

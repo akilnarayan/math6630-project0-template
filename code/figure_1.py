@@ -44,6 +44,7 @@ y0 = lserk_step(0, yT, f, dt, N, lserk)
 
 rcParams['font.family'] = 'serif'
 rcParams['font.weight'] = 'semibold'
+rcParams['mathtext.fontset'] = 'dejavuserif'
 plt.figure(figsize=(10, 5))
 
 plt.subplot(2, 3, 1)

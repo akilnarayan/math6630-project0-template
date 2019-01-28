@@ -83,28 +83,3 @@ def sawtooth_wave(x):
     y[mask] = -2*(x[mask]-1)
 
     return y
-
-# Implementation:
-# % u is unknown, ku is temp vector
-# rka, rkb, rkc are the coefficients above
-# while t<T;
-#   ku = zeros(size(u));
-#   stage_time = t;
-#   if t+dt>T;
-#     dt = T - t;
-#   end
-#
-#   % RK stages
-#   for p = 1:length(rk.rka);
-#     stage_time = t + dt*rk.rkc(p);
-#     make_rhs;
-#     ku = rk.rka(p)*ku + dt*urhs;
-#     u = u + rk.rkb(p)*ku;
-#
-#   end
-#
-#   % Update time, iteration count
-#   t = t+dt;
-#   niter = niter+1;
-#   ts(niter) = t;
-# end
