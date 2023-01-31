@@ -21,12 +21,12 @@ u0 = lambda xx: np.sin(np.pi*xx)
 T = 1
 
 # Choose coarsest dt for stability
-amax = np.max(np.abs(a(np.linspace(-1,1,1e3))))
+amax = np.max(np.abs(a(np.linspace(-1,1,1000))))
 dt = 1e-1/amax
-N = np.int(np.ceil(T/dt))
+N = int(np.ceil(T/dt))
 dt = T/N
 
-M = 1e3
+M = 1000
 # Particles at t=T
 xT = np.linspace(-1, 1, M+1)[:-1]
 xT += (xT[1]-xT[0])/2.

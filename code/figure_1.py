@@ -21,7 +21,7 @@ u0 = lambda xx: np.sin(4*np.pi*xx)
 T = 1
 
 # Choose dt for stability
-amax = np.max(np.abs(a(np.linspace(-1,1,1e3))))
+amax = np.max(np.abs(a(np.linspace(-1,1,1000))))
 dt = 1e-2/amax
 N = np.ceil(T/dt)
 dt = T/N
